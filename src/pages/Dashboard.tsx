@@ -63,6 +63,14 @@ function RegistrationModal({
     }
   }, [open, defaultCourseId]);
 
+  // 👇 ADD THIS RIGHT BELOW (DO NOT PUT ANYWHERE ELSE)
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   if (!open) return null;
 
   const onChange =
@@ -104,14 +112,19 @@ function RegistrationModal({
 
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center p-3">
-      <button
+      {/* <button
         type="button"
         onClick={onClose}
         className="absolute inset-0 bg-black/40"
         aria-label="Close modal"
-      />
+      /> */}
 
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl">
+      <div
+        className="absolute inset-0 bg-black/40"
+        onClick={onClose}
+        aria-hidden
+      />
+      <div className="relative w-full max-w-lg h-[90vh] rounded-2xl bg-white shadow-2xl flex flex-col">
         <div className="relative border-b bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-4">
           <h3 className="text-lg font-bold text-white">
             {heading || "Registration Form"}
@@ -132,6 +145,7 @@ function RegistrationModal({
             <X className="h-5 w-5" />
           </button>
         </div>
+        <div className="flex-1 overflow-y-auto p-5">
 
         <form onSubmit={handleSubmit} className="space-y-3 p-5">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -239,6 +253,7 @@ function RegistrationModal({
             </button>
           </div>
         </form>
+        </div>
 
         {/* (Optional) Debug info, remove later */}
         <div className="px-5 pb-4 text-[10px] text-gray-400">
@@ -343,8 +358,8 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-dvh overflow-y-auto">
-      <div className="h-full flex flex-col bg-gradient-to-b from-blue-50/50 via-white to-white">
+    // <div className="min-h-dvh">
+      <div className="h-screen flex flex-col bg-gradient-to-b from-blue-50/50 via-white to-white">
         <header className="shrink-0 px-3 pt-2 pb-2 text-center sm:px-6">
           <h1 className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 bg-clip-text text-2xl font-extrabold text-transparent sm:text-3xl">
             The Programmers Academy
@@ -359,8 +374,8 @@ export default function Dashboard() {
           </p>
         </header>
 
-        <main className="flex-1 overflow-y-auto px-3 py-2 sm:px-6">
-          <div className="mx-auto max-w-6xl h-full grid grid-rows-[auto_auto] gap-3">
+        <main className="flex-1 px-3 py-2 sm:px-6 overflow-y-auto">
+          <div className="mx-auto max-w-6xl grid grid-rows-[auto_auto] gap-3">
             {/* COURSES */}
             <section className="rounded-2xl border border-gray-200/70 bg-white/70 p-2 backdrop-blur shadow-sm">
               <div className="mb-1 flex items-center justify-between">
@@ -486,22 +501,22 @@ export default function Dashboard() {
 
         {/* FOOTER */}
         <footer className="shrink-0 border-t border-gray-200 bg-white/80 backdrop-blur">
-          <div className="mx-auto max-w-6xl px-3 sm:px-6 py-2 sm:py-3">
+          <div className="mx-auto max-w-6xl px-3 sm:px-6 py-1 sm:py-3">
             <div className="h-1 w-full rounded-full bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 opacity-90" />
 
-            <div className="flex flex-col items-center text-center pt-3">
-              <div className="text-lg sm:text-xl font-extrabold text-gray-900 tracking-wide">
+            <div className="flex flex-col items-center text-center pt-2 sm:pt-3">
+              <div className="text-base sm:text-xl font-extrabold text-gray-900 tracking-wide">
                 Contact Us
               </div>
 
               <div className="mt-2 h-[2px] w-16 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500" />
 
-              <div className="mt-3 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+              <div className="mt-2 sm:mt-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8">
                 <div className="flex items-center gap-3">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 ring-1 ring-blue-100">
+                  <span className="inline-flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-blue-50 ring-1 ring-blue-100">
                     <Phone className="h-5 w-5 text-blue-600" />
                   </span>
-                  <span className="text-base sm:text-lg font-bold text-gray-900 tracking-wide">
+                  <span className="text-sm sm:text-lg font-bold text-gray-900 tracking-wide">
                     9878 881818
                   </span>
                 </div>
@@ -536,6 +551,6 @@ export default function Dashboard() {
           subHeading={subHeading}
         />
       </div>
-    </div>
+    //</div>
   );
 }
