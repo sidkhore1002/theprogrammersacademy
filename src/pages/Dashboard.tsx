@@ -361,7 +361,6 @@ export default function Dashboard() {
 
         <main className="flex-1 px-3 py-2 sm:px-6">
           <div className="mx-auto max-w-6xl h-full grid grid-rows-[auto_auto] gap-3">
-
             {/* COURSES */}
             <section className="rounded-2xl border border-gray-200/70 bg-white/70 p-2 backdrop-blur shadow-sm">
               <div className="mb-1 flex items-center justify-between">
