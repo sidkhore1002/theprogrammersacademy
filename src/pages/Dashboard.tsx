@@ -343,7 +343,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="h-dvh overflow-hidden">
+    <div className="min-h-dvh overflow-y-auto">
       <div className="h-full flex flex-col bg-gradient-to-b from-blue-50/50 via-white to-white">
         <header className="shrink-0 px-3 pt-2 pb-2 text-center sm:px-6">
           <h1 className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 bg-clip-text text-2xl font-extrabold text-transparent sm:text-3xl">
@@ -359,7 +359,7 @@ export default function Dashboard() {
           </p>
         </header>
 
-        <main className="flex-1 px-3 py-2 sm:px-6">
+        <main className="flex-1 overflow-y-auto px-3 py-2 sm:px-6">
           <div className="mx-auto max-w-6xl h-full grid grid-rows-[auto_auto] gap-3">
             {/* COURSES */}
             <section className="rounded-2xl border border-gray-200/70 bg-white/70 p-2 backdrop-blur shadow-sm">
