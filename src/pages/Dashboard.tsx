@@ -1,14 +1,32 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Code2, Calendar, Phone, Mail, X } from "lucide-react";
+import {
+  ArrowRight,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  Code2,
+  Instagram,
+  Linkedin,
+  Lock,
+  Mail,
+  MapPin,
+  Phone,
+  Smartphone,
+  Sparkles,
+  Terminal,
+  X,
+  Youtube,
+} from "lucide-react";
 import { createRegistration } from "../services/registration";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 type Course = {
   id: string;
   title: string;
   color: string;
   price: number;
-  points: string[]; // max 4
+  points: string[];
+  syllabus: string[];
 };
 
 type Session = {
@@ -33,7 +51,7 @@ type FormState = {
 function RegistrationModal({
   open,
   onClose,
-  mode,
+  mode: _mode,
   courses,
   defaultCourseId,
   heading,
@@ -57,6 +75,8 @@ function RegistrationModal({
   });
 
   const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -80,11 +100,18 @@ function RegistrationModal({
       setForm((p) => ({ ...p, [key]: e.target.value }));
     };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (submitting) return;
 
-    // ✅ Keep payload minimal (matches most backend service types)
+    const formEl = e.currentTarget;
+    if (!formEl.checkValidity()) {
+      setFormError(true);
+      formEl.reportValidity();
+      setTimeout(() => setFormError(false), 400);
+      return;
+    }
+
     const registrationData = {
       name: form.name.trim(),
       email: form.email.trim(),
@@ -101,8 +128,11 @@ function RegistrationModal({
       const saved = await createRegistration(registrationData);
       console.log("Saved:", saved);
 
-      alert("Registration saved successfully!");
-      onClose();
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        onClose();
+      }, 1500);
     } catch (err) {
       console.error("API Error:", err);
       alert("Failed to submit. Check console.");
@@ -111,157 +141,238 @@ function RegistrationModal({
     }
   };
 
+  const selectedCourse =
+    courses.find((c) => c.id === form.courseId) ||
+    courses.find((c) => c.id === defaultCourseId) ||
+    courses[0];
+
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center p-3">
-      {/* <button
-        type="button"
-        onClick={onClose}
-        className="absolute inset-0 bg-black/40"
-        aria-label="Close modal"
-      /> */}
-
-      <div
-        className="absolute inset-0 bg-black/40"
-        onClick={onClose}
-        aria-hidden
-      />
-      <div className="relative w-full max-w-lg h-[90vh] rounded-2xl bg-white shadow-2xl flex flex-col">
-        <div className="relative border-b bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-4">
-          <h3 className="text-lg font-bold text-white">
-            {heading || "Registration Form"}
-          </h3>
-
-          {subHeading ? (
-            <p className="mt-1 text-xs font-semibold text-white/90">
-              {subHeading}
-            </p>
-          ) : null}
-
-          <button
-            type="button"
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-[999] flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
             onClick={onClose}
-            className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25"
-            aria-label="Close"
+            aria-hidden
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 28 }}
+            className="relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
           >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-        <div className="flex-1 overflow-y-auto p-5">
-
-        <form onSubmit={handleSubmit} className="space-y-3 p-5">
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div>
-              <label className="text-xs font-medium text-gray-700">
-                Name <span className="text-red-500">*</span>
-              </label>
-              <input
-                value={form.name}
-                onChange={onChange("name")}
-                required
-                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
-                placeholder="Your name"
-              />
+            {/* Header with color */}
+            <div className="flex items-start justify-between gap-4 bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-4 text-white">
+              <div>
+                <h3 className="text-base font-semibold">
+                  {heading || "Enroll"}
+                </h3>
+                {subHeading ? (
+                  <p className="mt-0.5 text-xs text-white/85">{subHeading}</p>
+                ) : null}
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-lg bg-white/10 p-1.5 text-white transition hover:bg-white/20"
+                aria-label="Close"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
 
-            <div>
-              <label className="text-xs font-medium text-gray-700">
-                Email <span className="text-red-500">*</span>
-              </label>
-              <input
-                value={form.email}
-                onChange={onChange("email")}
-                type="email"
-                required
-                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
-                placeholder="you@email.com"
-              />
+            {success && (
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                className="mx-4 mt-3 flex items-center gap-2 rounded-xl bg-emerald-50 px-3 py-2 text-xs font-medium text-emerald-800"
+              >
+                <CheckCircle2 className="h-4 w-4 shrink-0" />
+                Registration successful!
+              </motion.div>
+            )}
+
+            <div className="flex-1 px-0 pb-4 pt-3 md:pb-5">
+              <div className="flex h-full flex-col gap-4 px-4 md:flex-row md:gap-0">
+                {/* Left: syllabus, scrollable */}
+                <div className="md:w-1/2 md:border-r md:border-slate-100 md:pr-4 md:pl-1">
+                  <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    Course syllabus
+                  </div>
+                  {selectedCourse && (
+                    <>
+                      <div className="text-sm font-semibold text-slate-900">
+                        {selectedCourse.title}
+                      </div>
+                      <div className="mt-0.5 text-xs text-slate-600">
+                        ₹{selectedCourse.price} · {selectedCourse.points[0]}
+                      </div>
+                      <div className="mt-3 max-h-64 space-y-2 overflow-y-auto pr-1 text-xs text-slate-700">
+                        <ul className="space-y-2">
+                          {selectedCourse.syllabus.map((item, idx) => (
+                            <li
+                              key={idx}
+                              className="flex items-start gap-2 leading-snug"
+                            >
+                              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* Right: form, kept fixed width */}
+                <div className="mt-4 flex-1 md:mt-0 md:pl-4">
+                  <form
+                    onSubmit={handleSubmit}
+                    className={formError ? "animate-shake" : ""}
+                    noValidate
+                  >
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="mb-1 block text-xs font-medium text-slate-700">
+                            Name <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            value={form.name}
+                            onChange={onChange("name")}
+                            required
+                            placeholder="Your name"
+                            className="input-field w-full"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-medium text-slate-700">
+                            Email <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            value={form.email}
+                            onChange={onChange("email")}
+                            type="email"
+                            required
+                            placeholder="you@email.com"
+                            className="input-field w-full"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="mb-1 block text-xs font-medium text-slate-700">
+                            Education <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            value={form.education}
+                            onChange={onChange("education")}
+                            required
+                            placeholder="e.g. BE / BCS / 12th"
+                            className="input-field w-full"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-medium text-slate-700">
+                            Phone <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            value={form.phone}
+                            onChange={onChange("phone")}
+                            inputMode="tel"
+                            required
+                            placeholder="10-digit number"
+                            className="input-field w-full"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="mb-1 block text-xs font-medium text-slate-700">
+                          Course
+                        </label>
+                        <div className="relative">
+                          <select
+                            value={form.courseId}
+                            onChange={onChange("courseId")}
+                            required
+                            disabled
+                            aria-readonly
+                            className="input-field w-full cursor-not-allowed bg-slate-50 pr-9"
+                          >
+                            {courses
+                              .filter((c) => c.id === form.courseId)
+                              .map((c) => (
+                                <option key={c.id} value={c.id}>
+                                  {c.title}
+                                </option>
+                              ))}
+                          </select>
+                          <Lock className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="mb-1 block text-xs font-medium text-slate-700">
+                          Address <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          value={form.address}
+                          onChange={onChange("address")}
+                          required
+                          placeholder="City, area"
+                          className="input-field w-full"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-6 flex gap-3">
+                      <button
+                        type="button"
+                        onClick={onClose}
+                        disabled={submitting}
+                        className="flex-1 rounded-xl border border-slate-200 bg-white py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={submitting}
+                        className="btn-primary flex-1"
+                      >
+                        {submitting ? (
+                          <span className="inline-flex items-center gap-2">
+                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                            Submitting...
+                          </span>
+                        ) : (
+                          <>
+                            Submit{" "}
+                            <ArrowRight className="ml-1 inline h-4 w-4" />
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-
-            <div>
-              <label className="text-xs font-medium text-gray-700">
-                Education <span className="text-red-500">*</span>
-              </label>
-              <input
-                value={form.education}
-                onChange={onChange("education")}
-                required
-                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
-                placeholder="BE / BCS / 12th"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs font-medium text-gray-700">
-                Phone <span className="text-red-500">*</span>
-              </label>
-              <input
-                value={form.phone}
-                onChange={onChange("phone")}
-                inputMode="tel"
-                required
-                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
-                placeholder="10-digit phone"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="text-xs font-medium text-gray-700">
-              Course <span className="text-red-500">*</span>
-            </label>
-            <select
-              value={form.courseId}
-              onChange={onChange("courseId")}
-              required
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
-            >
-              {courses.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.title}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="text-xs font-medium text-gray-700">
-              Address <span className="text-red-500">*</span>
-            </label>
-            <input
-              value={form.address}
-              onChange={onChange("address")}
-              required
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
-              placeholder="City, area"
-            />
-          </div>
-
-          <div className="flex gap-2 pt-1">
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={submitting}
-              className="w-full rounded-xl border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-60"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-md hover:opacity-95 disabled:opacity-60"
-            >
-              {submitting ? "Submitting..." : "Submit"}
-            </button>
-          </div>
-        </form>
-        </div>
-
-        {/* (Optional) Debug info, remove later */}
-        <div className="px-5 pb-4 text-[10px] text-gray-400">
-          <div>Mode: {mode}</div>
-        </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -279,6 +390,17 @@ export default function Dashboard() {
           "Live Project Practice",
           "Play Store Deployment Basics",
         ],
+        syllabus: [
+          "Dart basics & OOP",
+          "Widgets: Stateless & Stateful",
+          "Navigation & routing",
+          "State management (Provider/Bloc)",
+          "HTTP & REST API integration",
+          "Firebase Auth & Firestore",
+          "Local storage (SharedPreferences, SQLite)",
+          "Live project: Build a full app",
+          "Play Store deployment basics",
+        ],
       },
       {
         id: "python",
@@ -291,6 +413,17 @@ export default function Dashboard() {
           "Interview Preparation",
           "Real-world Problem Solving",
         ],
+        syllabus: [
+          "Variables, data types, operators",
+          "Control flow & loops",
+          "Functions & modules",
+          "Data structures: list, dict, set, tuple",
+          "OOP: classes, inheritance",
+          "File handling & exceptions",
+          "Libraries: requests, pandas basics",
+          "Projects & logic building",
+          "Interview prep & problem solving",
+        ],
       },
       {
         id: "c-programming",
@@ -302,6 +435,16 @@ export default function Dashboard() {
           "DSA Foundation",
           "Problem Solving Skills",
           "Pointers & Memory Concepts",
+        ],
+        syllabus: [
+          "C basics: variables, operators, I/O",
+          "Control structures & loops",
+          "Functions & recursion",
+          "Arrays & strings",
+          "Pointers & memory concepts",
+          "Structures & unions",
+          "DSA foundation: arrays, linked list basics",
+          "Problem solving & practice",
         ],
       },
     ],
@@ -340,6 +483,34 @@ export default function Dashboard() {
   const [selectedCourseId, setSelectedCourseId] = useState(courses[0].id);
   const [heading, setHeading] = useState("");
   const [subHeading, setSubHeading] = useState("");
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
+
+  const testimonials = useMemo(
+    () => [
+      {
+        id: 1,
+        name: "Akshay Patil",
+        title: "Flutter Developer",
+        quote:
+          "The Programmers Academy helped me go from zero to publishing my first app on the Play Store.",
+      },
+      {
+        id: 2,
+        name: "Sneha Kulkarni",
+        title: "Python & Data Enthusiast",
+        quote:
+          "The teaching style is very practical and project-focused. It boosted my confidence in coding interviews.",
+      },
+      {
+        id: 3,
+        name: "Rohit Deshmukh",
+        title: "C Programming Student",
+        quote:
+          "DSA and pointers finally made sense. The small batch size and personal guidance really helped.",
+      },
+    ],
+    []
+  );
 
   const openCourseForm = (course: Course) => {
     setMode("course");
@@ -358,230 +529,480 @@ export default function Dashboard() {
     setModalOpen(true);
   };
 
+  const handleExploreClick = () => {
+    const el = document.getElementById("courses-section");
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const currentTestimonial = testimonials[testimonialIndex];
+
+  const goNextTestimonial = () => {
+    setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const goPrevTestimonial = () => {
+    setTestimonialIndex((prev) =>
+      prev === 0 ? testimonials.length - 1 : prev - 1
+    );
+  };
+
   return (
-    // <div className="min-h-dvh">
+    <div className="flex flex-1 flex-col gap-10">
+      {/* HERO */}
+      <motion.section
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="card-glass relative overflow-hidden px-5 py-6 sm:px-8 sm:py-8"
+      >
+        <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-b from-blue-100/60 to-cyan-100/40 sm:block" />
 
-    <div className="h-screen flex flex-col bg-gradient-to-b from-blue-50/50 via-white to-white">
-        <header className="shrink-0 px-3 pt-2 pb-2 text-center sm:px-6">
-          <h1 className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 bg-clip-text text-2xl font-extrabold text-transparent sm:text-3xl">
-            The Programmers Academy
-          </h1>
-
-          <p className="mt-0.5 text-xs font-semibold text-gray-700">
-            आम्ही{"  "}
-            <span className="font-extrabold text-blue-600 text-base sm:text-sm">
-              Programmers
-            </span>{"  "}
-            घडवतो...
-          </p>
-        </header>
-
-{/* <div className="h-screen flex flex-col bg-gradient-to-b from-blue-50/60 via-white to-white">
-  <header
-    className="shrink-0 px-4 pt-3 pb-3 sm:px-6 text-center
-               bg-white/40 backdrop-blur-xl border-b border-white/50"
-  >
-    <h1
-      className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700
-                 bg-clip-text text-2xl sm:text-3xl font-extrabold
-                 tracking-tight text-transparent"
-    >
-      The Programmers Academy
-    </h1>
-
-    <p className="mt-1 text-xs sm:text-sm font-medium text-gray-700">
-      आम्ही{" "}
-      <span className="font-extrabold text-blue-600">
-        Programmers
-      </span>{" "}
-      घडवतो...
-    </p>
-  </header> */}
-
-<main className="flex-1 px-3 py-3 sm:px-6 overflow-y-auto bg-gradient-to-br from-blue-50 via-cyan-50 to-white">
-  <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-20">
-
-    {/* ================= COURSES ================= */}
-    <motion.section
-      initial={{ opacity: 0, x: -30 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}
-      className="lg:col-span-2 rounded-3xl border border-white/40
-                 bg-white/40 backdrop-blur-xl shadow-xl p-4"
-    >
-      <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-lg font-extrabold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-          🎓 Courses
-        </h2>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {courses.map((course, i) => (
-          <motion.button
-            key={course.id}
-            onClick={() => openCourseForm(course)}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className="group relative overflow-hidden rounded-3xl
-                       bg-white/60 backdrop-blur-xl p-4 text-left
-                       border border-white/50 shadow-lg"
-          >
-            {/* Gradient top bar */}
-            <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${course.color}`} />
-
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-3 font-bold text-gray-900">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl
-                                 bg-gradient-to-br from-blue-100 to-cyan-100 text-blue-700">
-                  <Code2 className="h-4 w-4" />
-                </span>
-                <span className="text-sm leading-tight">
-                  {course.title}
-                </span>
-              </div>
-
-              <span className="rounded-full bg-gradient-to-r from-blue-600 to-cyan-500
-                               px-3 py-1 text-xs font-bold text-white shadow">
-                ₹{course.price}
-              </span>
+        <div className="relative grid gap-6 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] items-center">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="inline-flex items-center gap-2 rounded-full bg-blue-50/80 px-3 py-1 text-[11px] font-semibold text-blue-700 ring-1 ring-blue-100">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Learn · Build · Grow</span>
             </div>
 
-            <ul className="mt-3 space-y-1 text-[11px] text-gray-700">
-              {course.points.slice(0, 4).map((p, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-blue-600" />
-                  <span>{p}</span>
-                </li>
-              ))}
-            </ul>
+            <h1 className="bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-2xl font-extrabold tracking-tight text-transparent sm:text-3xl md:text-4xl">
+              The Programmers Academy
+            </h1>
 
-            <div className="mt-4 flex justify-center">
-              <span className="rounded-full bg-gradient-to-r from-blue-600 to-cyan-500
-                               px-4 py-1.5 text-[11px] font-bold text-white
-                               shadow-md group-hover:shadow-lg">
-                Enroll Now →
-              </span>
-            </div>
-          </motion.button>
-        ))}
-      </div>
-    </motion.section>
+            <p className="max-w-xl text-xs text-slate-600 sm:text-sm">
+              आम्ही{" "}
+              <span className="font-semibold text-blue-700">Programmers</span>{" "}
+              घडवतो — from fundamentals to real-world projects, with
+              personalised guidance and placement-focused training.
+            </p>
 
-    {/* ================= FREE SESSIONS ================= */}
-    <motion.section
-      initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}
-      className="rounded-3xl border border-white/40
-                 bg-white/40 backdrop-blur-xl shadow-xl p-4"
-    >
-      <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-lg font-extrabold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-          🗓 Free Sessions
-        </h2>
-      </div>
-
-      <div className="space-y-4">
-        {sessions.map((s, i) => {
-          const course = courses.find((c) => c.id === s.courseId);
-
-          return (
-            <motion.button
-              key={s.id}
-              onClick={() => openSessionForm(s)}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.08 }}
-              whileHover={{ scale: 1.03 }}
-              className="group relative w-full overflow-hidden rounded-3xl
-                         bg-white/60 backdrop-blur-xl p-4 text-left
-                         border border-white/50 shadow-lg"
-            >
-              <div
-                className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${
-                  course?.color ?? "from-blue-600 to-cyan-500"
-                }`}
-              />
-
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-3 font-bold text-gray-900">
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl
-                                   bg-gradient-to-br from-cyan-100 to-blue-100 text-blue-700">
-                    <Calendar className="h-4 w-4" />
-                  </span>
-                  <span className="text-sm leading-tight">{s.title}</span>
-                </div>
-
-                <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
-                  FREE
+            <div className="flex flex-wrap items-center gap-3 pt-1 sm:pt-2">
+              <button onClick={handleExploreClick} className="btn-primary">
+                <span className="inline-flex items-center gap-1.5">
+                  Explore Courses
+                  <ArrowRight className="h-4 w-4" />
                 </span>
-              </div>
+              </button>
 
-              <div className="mt-3 space-y-1 text-[11px] font-bold text-gray-700">
-                <div>Date : {s.dateText}</div>
-
-                <div className="flex items-center justify-between pt-1">
-                  <span>Time : {s.timeText}</span>
-                  <span className="rounded-full bg-gradient-to-r from-blue-600 to-cyan-500
-                                   px-4 py-1 text-[11px] font-bold text-white shadow">
-                    Register →
-                  </span>
+              <div className="flex items-center gap-2 text-[11px] text-slate-600 sm:text-xs">
+                <div className="flex items-center -space-x-2">
+                  <div className="h-7 w-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-[10px] font-bold text-white shadow-md flex items-center justify-center">
+                    A
+                  </div>
+                  <div className="h-7 w-7 rounded-full bg-gradient-to-br from-indigo-500 to-sky-500 text-[10px] font-bold text-white shadow-md flex items-center justify-center">
+                    S
+                  </div>
+                  <div className="h-7 w-7 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-[10px] font-bold text-white shadow-md flex items-center justify-center">
+                    R
+                  </div>
                 </div>
+                <span>500+ students already learning with us</span>
               </div>
-            </motion.button>
-          );
-        })}
-      </div>
-    </motion.section>
-
-  </div>
-</main>
-
-
-        {/* FOOTER */}
-        <footer className="shrink-0 border-t border-gray-300 bg-white/80 backdrop-blur">
-          <div className="mx-auto max-w-6xl px-3 sm:px-6">
-            {/* <div className="h-1 w-full rounded-full bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 opacity-90" /> */}
-
-            <div className="flex flex-col items-center text-center pt-1 sm:pt-1 pb-2 sm:pb-3">
-              <div className="text-base sm:text-xl font-extrabold text-gray-900 tracking-wide">
-                Contact Us
-              </div>
-
-              {/* <div className="mt-2 h-[2px] w-16 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500" /> */}
-
-              <div className="mt-3 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex h-7 w-7 sm:h-7 sm:w-7 items-center justify-center rounded-lg sm:rounded-xl bg-blue-50 ring-1 ring-blue-100">
-                    <Phone className="h-4 w-4 text-blue-600" />
-                  </span>
-                  <span className="text-sm sm:text-sm font-bold text-gray-900 tracking-wide">
-                    9878 881818
-                  </span>
-                </div>
-
-                {/* <div className="hidden sm:block h-8 w-px bg-gray-300" /> */}
-
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-cyan-50 ring-1 ring-cyan-100">
-                    <Mail className="h-4 w-4 text-blue-600" />
-                  </span>
-                  <span className="text-base sm:text-sm font-bold text-gray-900 break-all">
-                    theprogrammersacademy1@gmail.com
-                  </span>
-                </div>
-              </div>
-
-              {/* <div className="mt-4 text-[11px] sm:text-xs font-semibold text-gray-500">
-                © {new Date().getFullYear()} The Programmers Academy • All Rights
-                Reserved
-              </div> */}
             </div>
           </div>
-        </footer>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+            className="card-glass relative hidden h-full min-h-[180px] items-center justify-center rounded-3xl bg-gradient-to-br from-blue-600 via-sky-500 to-cyan-400 p-4 text-white shadow-2xl sm:flex"
+          >
+            <div className="absolute -top-6 -right-6 h-16 w-16 rounded-full bg-white/20 blur-xl" />
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold">
+                <Smartphone className="h-3.5 w-3.5" />
+                <span>Flutter · Python · C</span>
+              </div>
+
+              <div className="space-y-1.5">
+                <p className="text-xs font-medium text-blue-50/90">
+                  Next Free Demo Session
+                </p>
+                <p className="text-sm font-semibold">
+                  {sessions[0]?.title ?? "Programming Demo Session"}
+                </p>
+
+                <div className="flex items-center gap-2 text-[11px] text-blue-50">
+                  <Calendar className="h-3.5 w-3.5" />
+                  <span>{sessions[0]?.dateText}</span>
+                </div>
+                <div className="flex items-center gap-2 text-[11px] text-blue-50">
+                  <Clock className="h-3.5 w-3.5" />
+                  <span>{sessions[0]?.timeText}</span>
+                </div>
+              </div>
+
+              <div className="flex gap-4 pt-2 text-[11px] text-blue-50/90">
+                <div>
+                  <div className="text-sm font-extrabold">3+</div>
+                  <div>Core courses</div>
+                </div>
+                <div>
+                  <div className="text-sm font-extrabold">10+</div>
+                  <div>Live projects</div>
+                </div>
+                <div>
+                  <div className="text-sm font-extrabold">1:1</div>
+                  <div>Mentor support</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* STATS */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5 }}
+        className="grid gap-4 sm:grid-cols-3"
+      >
+        {[
+          { label: "Students Enrolled", value: "500+" },
+          { label: "Courses Available", value: "3" },
+          { label: "Placement Support", value: "Yes" },
+        ].map((item) => (
+          <motion.div
+            key={item.label}
+            whileHover={{ y: -4, scale: 1.01 }}
+            className="card-glass flex flex-col items-center justify-center px-4 py-3 text-center"
+          >
+            <div className="text-sm font-extrabold text-blue-700 sm:text-base">
+              {item.value}
+            </div>
+            <div className="mt-1 text-[11px] font-medium text-slate-600 sm:text-xs">
+              {item.label}
+            </div>
+          </motion.div>
+        ))}
+      </motion.section>
+
+      {/* COURSES: syllabus first, then enroll */}
+      <section id="courses-section" className="space-y-6">
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-xl font-bold text-slate-800"
+        >
+          Courses
+        </motion.h2>
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {courses.map((course, i) => {
+            const Icon =
+              course.id === "flutter"
+                ? Smartphone
+                : course.id === "python"
+                  ? Code2
+                  : Terminal;
+            return (
+              <motion.div
+                key={course.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: i * 0.06 }}
+                className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
+              >
+                <div className={`h-1.5 w-full bg-gradient-to-r ${course.color}`} />
+                <div className="flex flex-1 flex-col p-4">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r ${course.color} text-white`}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <div>
+                        <h3 className="font-semibold text-slate-900">
+                          {course.title}
+                        </h3>
+                        <p className="text-sm font-medium text-slate-600">
+                          ₹{course.price}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ul className="mt-3 space-y-1 text-xs text-slate-600">
+                    {course.points.slice(0, 4).map((p, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    type="button"
+                    onClick={() => openCourseForm(course)}
+                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-95"
+                  >
+                    Enroll now
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* FREE DEMO SESSIONS: syllabus first, then register */}
+      <section className="space-y-4">
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-xl font-bold text-slate-800"
+        >
+          Free demo sessions
+        </motion.h2>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {sessions.map((s, i) => {
+            const course = courses.find((c) => c.id === s.courseId);
+            return (
+              <motion.div
+                key={s.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: i * 0.06 }}
+                className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
+              >
+                <div
+                  className={`h-1.5 w-full bg-gradient-to-r ${course?.color ?? "from-blue-500 to-cyan-400"}`}
+                />
+                <div className="flex flex-1 flex-col p-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="font-semibold text-slate-900">{s.title}</h3>
+                    <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                      FREE
+                    </span>
+                  </div>
+                  <div className="mt-2 flex items-center gap-3 text-xs text-slate-600">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="h-3.5 w-3.5" />
+                      {s.dateText}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3.5 w-3.5" />
+                      {s.timeText}
+                    </span>
+                  </div>
+
+                  {course && (
+                    <ul className="mt-3 space-y-1 text-xs text-slate-600">
+                      {course.points.slice(0, 3).map((p, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => openSessionForm(s)}
+                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-95"
+                  >
+                    Register for session
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5 }}
+        className="card-glass overflow-hidden px-5 py-5 sm:px-7 sm:py-6"
+      >
+        <div className="mb-4 flex items-center justify-between gap-2">
+          <div>
+            <h2 className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-lg font-extrabold text-transparent">
+              ⭐ Student Stories
+            </h2>
+            <p className="mt-1 text-[11px] text-slate-600 sm:text-xs">
+              Real feedback from learners at The Programmers Academy.
+            </p>
+          </div>
+
+          <div className="hidden text-[11px] text-slate-500 sm:block">
+            Swipe through to see more
+          </div>
+        </div>
+
+        <div className="relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentTestimonial.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.35 }}
+              className="rounded-2xl bg-white/70 p-4 shadow-sm"
+            >
+              <p className="text-[11px] leading-relaxed text-slate-700 sm:text-sm">
+                “{currentTestimonial.quote}”
+              </p>
+
+              <div className="mt-3 flex items-center justify-between gap-3">
+                <div>
+                  <div className="text-xs font-semibold text-slate-900 sm:text-sm">
+                    {currentTestimonial.name}
+                  </div>
+                  <div className="text-[10px] text-slate-500 sm:text-[11px]">
+                    {currentTestimonial.title}
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={goPrevTestimonial}
+                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    onClick={goNextTestimonial}
+                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50"
+                  >
+                    ›
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="mt-3 flex justify-center gap-1.5">
+            {testimonials.map((t, index) => (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => setTestimonialIndex(index)}
+                className={`h-1.5 rounded-full transition-all ${
+                  testimonialIndex === index
+                    ? "w-4 bg-blue-600"
+                    : "w-2 bg-slate-300"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* CONTACT + SOCIAL */}
+      <footer className="mt-auto">
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
+          className="card-glass px-5 py-5 sm:px-7 sm:py-6"
+        >
+          <div className="mb-4 flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
+            <div>
+              <h2 className="text-base font-extrabold text-slate-900 sm:text-lg">
+                Contact Us
+              </h2>
+              <p className="mt-1 text-[11px] text-slate-600 sm:text-xs">
+                Have questions about a course or batch schedule? Reach out any
+                time.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            <motion.div
+              whileHover={{ y: -4, scale: 1.02 }}
+              className="flex flex-col items-center gap-2 rounded-2xl bg-white/80 px-4 py-3 text-center shadow-sm"
+            >
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 to-cyan-100 text-blue-700 shadow-sm">
+                <Phone className="h-4 w-4" />
+              </span>
+              <div className="text-[11px] font-semibold text-slate-500">
+                Phone
+              </div>
+              <div className="text-sm font-bold text-slate-900">
+                9878 881818
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ y: -4, scale: 1.02 }}
+              className="flex flex-col items-center gap-2 rounded-2xl bg-white/80 px-4 py-3 text-center shadow-sm"
+            >
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-100 to-blue-100 text-blue-700 shadow-sm">
+                <Mail className="h-4 w-4" />
+              </span>
+              <div className="text-[11px] font-semibold text-slate-500">
+                Email
+              </div>
+              <div className="text-[11px] font-bold text-slate-900 sm:text-xs break-all">
+                theprogrammersacademy1@gmail.com
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ y: -4, scale: 1.02 }}
+              className="flex flex-col items-center gap-2 rounded-2xl bg-white/80 px-4 py-3 text-center shadow-sm"
+            >
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 to-sky-100 text-indigo-700 shadow-sm">
+                <MapPin className="h-4 w-4" />
+              </span>
+              <div className="text-[11px] font-semibold text-slate-500">
+                Location
+              </div>
+              <div className="text-sm font-bold text-slate-900">
+                Karad, Maharashtra
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="mt-5 flex flex-col items-center justify-between gap-3 border-t border-slate-100 pt-3 text-center sm:flex-row">
+            <div className="text-[10px] text-slate-500 sm:text-[11px]">
+              © {new Date().getFullYear()} The Programmers Academy · All rights
+              reserved.
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-medium text-slate-600">
+                Follow us
+              </span>
+              <div className="flex items-center gap-2">
+                {[
+                  { Icon: Instagram, label: "Instagram" },
+                  { Icon: Linkedin, label: "LinkedIn" },
+                  { Icon: Youtube, label: "YouTube" },
+                ].map(({ Icon, label }) => (
+                  <motion.button
+                    key={label}
+                    type="button"
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-700 shadow-sm ring-1 ring-slate-100"
+                    aria-label={label}
+                  >
+                    <Icon className="h-4 w-4" />
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.section>
 
         <RegistrationModal
           open={modalOpen}
@@ -592,7 +1013,7 @@ export default function Dashboard() {
           heading={heading}
           subHeading={subHeading}
         />
-      </div>
-    //</div>
+      </footer>
+    </div>
   );
 }
