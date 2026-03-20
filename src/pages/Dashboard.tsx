@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { createRegistration } from "../services/registration";
 import { AnimatePresence, motion } from "framer-motion";
+import { Laptop } from "lucide-react";
 
 type Course = {
   id: string;
@@ -206,6 +207,7 @@ function RegistrationModal({
             <div className="flex-1 px-0 pb-4 pt-3 md:pb-5">
               <div className="flex h-full flex-col gap-4 px-4 md:flex-row md:gap-0">
                 {/* Left: syllabus, scrollable */}
+               { _mode === "course" && (
                 <div className="md:w-1/2 md:border-r md:border-slate-100 md:pr-4 md:pl-1">
                   <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
                     Course syllabus
@@ -234,6 +236,7 @@ function RegistrationModal({
                     </>
                   )}
                 </div>
+               ) } 
 
                 {/* Right: form, kept fixed width */}
                 <div className="mt-4 flex-1 md:mt-0 md:pl-4">
@@ -359,7 +362,7 @@ function RegistrationModal({
                           </span>
                         ) : (
                           <>
-                            Submit{" "}
+                            { _mode === "course" ? "Submit" : "Register"} {" "}
                             <ArrowRight className="ml-1 inline h-4 w-4" />
                           </>
                         )}
@@ -385,10 +388,10 @@ export default function Dashboard() {
         color: "from-blue-500 to-cyan-400",
         price: 3000,
         points: [
-          "Mobile Apps",
-          "Firebase + API Basics",
-          "Live Project Practice",
-          "Play Store Deployment Basics",
+          "Mobile App Development",
+          "Firebase Integration",
+          "Backend-API integration",
+          "3 Live Projects(GitHub)",
         ],
         syllabus: [
           "Dart basics & OOP",
@@ -408,10 +411,82 @@ export default function Dashboard() {
         color: "from-green-500 to-emerald-400",
         price: 3000,
         points: [
-          "Basic to Advanced",
-          "Projects + Logic Building",
-          "Interview Preparation",
-          "Real-world Problem Solving",
+          "Basics of Python",
+          "File Handling",
+          "API development",
+          "Python - Data Science",
+        ],
+        syllabus: [
+          "Variables, data types, operators",
+          "Control flow & loops",
+          "Functions & modules",
+          "Data structures: list, dict, set, tuple",
+          "OOP: classes, inheritance",
+          "File handling & exceptions",
+          "Libraries: requests, pandas basics",
+          "Projects & logic building",
+          "Interview prep & problem solving",
+        ],
+      },
+      {
+        id: "c-programming",
+        title: "C Programming",
+        color: "from-orange-500 to-amber-400",
+        price: 2000,
+        points: [
+          "C Basics & Core Concepts",
+          "DSA Foundation",
+          "Pointers & Memory Concepts",
+          "2 Projects"
+        ],
+        syllabus: [
+          "C basics: variables, operators, I/O",
+          "Control structures & loops",
+          "Functions & recursion",
+          "Arrays & strings",
+          "Pointers & memory concepts",
+          "Structures & unions",
+          "DSA foundation: arrays, linked list basics",
+          "Problem solving & practice",
+        ],
+      },
+    ],
+    []
+  );
+
+  const freeCourses: Course[] = useMemo(
+    () => [
+      {
+        id: "flutter",
+        title: "Flutter Session",
+        color: "from-blue-500 to-cyan-400",
+        price: 3000,
+        points: [
+          "Introduction to Mobile Apps",
+          "Firebase Introduction",
+          "Dart Concepts"
+        ],
+        syllabus: [
+          "Dart basics & OOP",
+          "Widgets: Stateless & Stateful",
+          "Navigation & routing",
+          "State management (Provider/Bloc)",
+          "HTTP & REST API integration",
+          "Firebase Auth & Firestore",
+          "Local storage (SharedPreferences, SQLite)",
+          "Live project: Build a full app",
+          "Play Store deployment basics",
+        ],
+      },
+      {
+        id: "python",
+        title: "Python Programming",
+        color: "from-green-500 to-emerald-400",
+        price: 3000,
+        points: [
+          "Python basics",
+          "Python libraries",
+          "AI-ML Concepts"
         ],
         syllabus: [
           "Variables, data types, operators",
@@ -432,9 +507,8 @@ export default function Dashboard() {
         price: 2000,
         points: [
           "C Basics",
-          "DSA Foundation",
-          "Problem Solving Skills",
-          "Pointers & Memory Concepts",
+          "Memory Management",
+          "DSA"
         ],
         syllabus: [
           "C basics: variables, operators, I/O",
@@ -483,34 +557,34 @@ export default function Dashboard() {
   const [selectedCourseId, setSelectedCourseId] = useState(courses[0].id);
   const [heading, setHeading] = useState("");
   const [subHeading, setSubHeading] = useState("");
-  const [testimonialIndex, setTestimonialIndex] = useState(0);
+  // const [testimonialIndex, setTestimonialIndex] = useState(0);
 
-  const testimonials = useMemo(
-    () => [
-      {
-        id: 1,
-        name: "Akshay Patil",
-        title: "Flutter Developer",
-        quote:
-          "The Programmers Academy helped me go from zero to publishing my first app on the Play Store.",
-      },
-      {
-        id: 2,
-        name: "Sneha Kulkarni",
-        title: "Python & Data Enthusiast",
-        quote:
-          "The teaching style is very practical and project-focused. It boosted my confidence in coding interviews.",
-      },
-      {
-        id: 3,
-        name: "Rohit Deshmukh",
-        title: "C Programming Student",
-        quote:
-          "DSA and pointers finally made sense. The small batch size and personal guidance really helped.",
-      },
-    ],
-    []
-  );
+  // const testimonials = useMemo(
+  //   () => [
+  //     {
+  //       id: 1,
+  //       name: "Akshay Patil",
+  //       title: "Flutter Developer",
+  //       quote:
+  //         "The Programmers Academy helped me go from zero to publishing my first app on the Play Store.",
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "Sneha Kulkarni",
+  //       title: "Python & Data Enthusiast",
+  //       quote:
+  //         "The teaching style is very practical and project-focused. It boosted my confidence in coding interviews.",
+  //     },
+  //     {
+  //       id: 3,
+  //       name: "Rohit Deshmukh",
+  //       title: "C Programming Student",
+  //       quote:
+  //         "DSA and pointers finally made sense. The small batch size and personal guidance really helped.",
+  //     },
+  //   ],
+  //   []
+  // );
 
   const openCourseForm = (course: Course) => {
     setMode("course");
@@ -534,17 +608,17 @@ export default function Dashboard() {
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const currentTestimonial = testimonials[testimonialIndex];
+  // const currentTestimonial = testimonials[testimonialIndex];
 
-  const goNextTestimonial = () => {
-    setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
-  };
+  // const goNextTestimonial = () => {
+  //   setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+  // };
 
-  const goPrevTestimonial = () => {
-    setTestimonialIndex((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
-    );
-  };
+  // const goPrevTestimonial = () => {
+  //   setTestimonialIndex((prev) =>
+  //     prev === 0 ? testimonials.length - 1 : prev - 1
+  //   );
+  // };
 
   return (
     <div className="flex flex-1 flex-col gap-10">
@@ -557,12 +631,12 @@ export default function Dashboard() {
       >
         <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-b from-blue-100/60 to-cyan-100/40 sm:block" />
 
-        <div className="relative grid gap-6 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] items-center">
+        <div className="relative grid gap-6 sm:grid-cols-[minmax(0,2fr)_minmax(0,0.85fr)] items-center">
           <div className="space-y-3 sm:space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full bg-blue-50/80 px-3 py-1 text-[11px] font-semibold text-blue-700 ring-1 ring-blue-100">
+            {/* <div className="inline-flex items-center gap-2 rounded-full bg-blue-50/80 px-3 py-1 text-[11px] font-semibold text-blue-700 ring-1 ring-blue-100">
               <Sparkles className="h-3.5 w-3.5" />
               <span>Learn · Build · Grow</span>
-            </div>
+            </div> */}
 
             <h1 className="bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-2xl font-extrabold tracking-tight text-transparent sm:text-3xl md:text-4xl">
               The Programmers Academy
@@ -571,8 +645,7 @@ export default function Dashboard() {
             <p className="max-w-xl text-xs text-slate-600 sm:text-sm">
               आम्ही{" "}
               <span className="font-semibold text-blue-700">Programmers</span>{" "}
-              घडवतो — from fundamentals to real-world projects, with
-              personalised guidance and placement-focused training.
+              घडवतो
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-1 sm:pt-2">
@@ -583,7 +656,7 @@ export default function Dashboard() {
                 </span>
               </button>
 
-              <div className="flex items-center gap-2 text-[11px] text-slate-600 sm:text-xs">
+              {/* <div className="flex items-center gap-2 text-[11px] text-slate-600 sm:text-xs">
                 <div className="flex items-center -space-x-2">
                   <div className="h-7 w-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-[10px] font-bold text-white shadow-md flex items-center justify-center">
                     A
@@ -596,7 +669,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <span>500+ students already learning with us</span>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -608,9 +681,17 @@ export default function Dashboard() {
           >
             <div className="absolute -top-6 -right-6 h-16 w-16 rounded-full bg-white/20 blur-xl" />
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold">
-                <Smartphone className="h-3.5 w-3.5" />
-                <span>Flutter · Python · C</span>
+              <div className="flex items-center gap-2">
+                {/* Flutter pill */}
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold">
+                  <Smartphone className="h-3.5 w-3.5" />
+                  <span>Flutter</span>
+                </div>
+
+                {/* FREE pill */}
+                <div className="inline-flex items-center rounded-full bg-emerald-400/20 px-3 py-1 text-[11px] font-semibold text-emerald-100">
+                  FREE
+                </div>
               </div>
 
               <div className="space-y-1.5">
@@ -631,18 +712,10 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="flex gap-4 pt-2 text-[11px] text-blue-50/90">
-                <div>
-                  <div className="text-sm font-extrabold">3+</div>
-                  <div>Core courses</div>
-                </div>
-                <div>
-                  <div className="text-sm font-extrabold">10+</div>
-                  <div>Live projects</div>
-                </div>
-                <div>
-                  <div className="text-sm font-extrabold">1:1</div>
-                  <div>Mentor support</div>
+              <div className="flex items-center justify-center pt-2 min-h-[48px]">
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-[11px] font-medium text-blue-50">
+                  <Laptop className="h-4 w-4" />
+                  <span>Mode: Online</span>
                 </div>
               </div>
             </div>
@@ -659,7 +732,7 @@ export default function Dashboard() {
         className="grid gap-4 sm:grid-cols-3"
       >
         {[
-          { label: "Students Enrolled", value: "500+" },
+          { label: "Students Enrolled", value: "75+" },
           { label: "Courses Available", value: "3" },
           { label: "Placement Support", value: "Yes" },
         ].map((item) => (
@@ -763,7 +836,7 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sessions.map((s, i) => {
-            const course = courses.find((c) => c.id === s.courseId);
+            const course = freeCourses.find((c) => c.id === s.courseId);
             return (
               <motion.div
                 key={s.id}
@@ -821,7 +894,7 @@ export default function Dashboard() {
       </section>
 
       {/* TESTIMONIALS */}
-      <motion.section
+      {/* <motion.section
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -902,7 +975,7 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       {/* CONTACT + SOCIAL */}
       <footer className="mt-auto">
@@ -967,7 +1040,7 @@ export default function Dashboard() {
                 Location
               </div>
               <div className="text-sm font-bold text-slate-900">
-                Karad, Maharashtra
+                Pune, Maharashtra
               </div>
             </motion.div>
           </div>
