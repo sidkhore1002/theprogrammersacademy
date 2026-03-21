@@ -127,13 +127,12 @@ function RegistrationModal({
       setSubmitting(true);
 
       const saved = await createRegistration(registrationData);
-      console.log("Saved:", saved);
-
+      console.log("Saved in Firebase:", saved);      
       setSuccess(true);
       setTimeout(() => {
         setSuccess(false);
         onClose();
-      }, 1500);
+      }, 1000);
     } catch (err) {
       console.error("API Error:", err);
       alert("Failed to submit. Check console.");
