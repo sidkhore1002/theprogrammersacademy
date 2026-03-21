@@ -173,14 +173,29 @@ function RegistrationModal({
           >
             {/* Header with color */}
             <div className="flex items-start justify-between gap-4 bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-4 text-white">
-              <div>
-                <h3 className="text-base font-semibold">
-                  {heading || "Enroll"}
-                </h3>
-                {subHeading ? (
-                  <p className="mt-0.5 text-xs text-white/85">{subHeading}</p>
-                ) : null}
+              <div className="space-y-1">
+    
+                {/* Heading + FREE badge */}
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base font-semibold">
+                    {heading || "Enroll"}
+                  </h3>
+
+                  {_mode === "session" && (
+                   <span className="rounded-full bg-white px-3 py-1 text-[10px] font-bold text-blue-600 shadow-sm">
+  FREE
+</span>
+                  )}
+                </div>
+
+                {/* Subheading */}
+                {subHeading && (
+                  <p className="text-xs text-white/85">
+                    {subHeading}
+                  </p>
+                )}
               </div>
+
               <button
                 type="button"
                 onClick={onClose}
@@ -216,9 +231,9 @@ function RegistrationModal({
                       <div className="text-sm font-semibold text-slate-900">
                         {selectedCourse.title}
                       </div>
-                      <div className="mt-0.5 text-xs text-slate-600">
+                      {/* <div className="mt-0.5 text-xs text-slate-600">
                         ₹{selectedCourse.price} · {selectedCourse.points[0]}
-                      </div>
+                      </div> */}
                       <div className="mt-3 max-h-64 space-y-2 overflow-y-auto pr-1 text-xs text-slate-700">
                         <ul className="space-y-2">
                           {selectedCourse.syllabus.map((item, idx) => (
@@ -688,7 +703,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* FREE pill */}
-                <div className="inline-flex items-center rounded-full bg-emerald-400/20 px-3 py-1 text-[11px] font-semibold text-emerald-100">
+                <div className="inline-flex items-center rounded-full bg-emerald-400/20 px-3 py-1 text-[12px] font-semibold text-emerald-100">
                   FREE
                 </div>
               </div>
