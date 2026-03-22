@@ -9,6 +9,7 @@ export type RegistrationPayload = {
   education: string;
   address: string;
   courseId: string;
+  courseOrSession: string,
   registrationDate: string; // ISO string
 };
 

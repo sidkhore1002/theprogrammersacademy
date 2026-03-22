@@ -5,6 +5,7 @@ import {
   CheckCircle2,
   Clock,
   Code2,
+  Facebook,
   Instagram,
   Linkedin,
   Lock,
@@ -121,8 +122,10 @@ function RegistrationModal({
       education: form.education.trim(),
       address: form.address.trim(),
       courseId: form.courseId,
+      courseOrSession: _mode,
       registrationDate: new Date().toISOString(),
     };
+    // console.log(_mode);
 
     try {
       setSubmitting(true);
@@ -184,8 +187,8 @@ function RegistrationModal({
 
                   {_mode === "session" && (
                    <span className="rounded-full bg-white px-3 py-1 text-[10px] font-bold text-blue-600 shadow-sm">
-  FREE
-</span>
+                      Free Live Session
+                    </span>
                   )}
                 </div>
 
@@ -377,7 +380,7 @@ function RegistrationModal({
                           </span>
                         ) : (
                           <>
-                            { _mode === "course" ? "Submit" : "Register"} {" "}
+                            { _mode === "course" ? "Submit" : "Register for Free session"} {" "}
                             <ArrowRight className="ml-1 inline h-4 w-4" />
                           </>
                         )}
@@ -404,20 +407,20 @@ export default function Dashboard() {
         price: 3000,
         points: [
           "Mobile App Development",
-          "Firebase Integration",
           "Backend-API integration",
-          "3 Live Projects(GitHub)",
+          "Firebase Integration",
+          "3 Mobile apps (GitHub)",
         ],
         syllabus: [
-          "Dart basics & OOP",
-          "Widgets: Stateless & Stateful",
+          "Introduction to Flutter & Dart",
+          "Widget System (Stateless & Stateful)",
+          "Layouts (Row, Column, Container, Text)",
           "Navigation & routing",
-          "State management (Provider/Bloc)",
+          "Using Packages from pub.dev",
+          "State Management (setState, Provider)",
           "HTTP & REST API integration",
           "Firebase Auth & Firestore",
-          "Local storage (SharedPreferences, SQLite)",
-          "Live project: Build a full app",
-          "Play Store deployment basics",
+          "Add 3 Apps to GitHub",
         ],
       },
       {
@@ -427,20 +430,21 @@ export default function Dashboard() {
         price: 3000,
         points: [
           "Basics of Python",
-          "File Handling",
           "API development",
           "Python - Data Science",
+          "3 Projects (GitHub)",
         ],
         syllabus: [
+          "Introduction to Python",
           "Variables, data types, operators",
-          "Control flow & loops",
-          "Functions & modules",
+          "Conditional Statements (if, else)",
+          "Loops (for, while), Functions",
           "Data structures: list, dict, set, tuple",
-          "OOP: classes, inheritance",
           "File handling & exceptions",
-          "Libraries: requests, pandas basics",
-          "Projects & logic building",
-          "Interview prep & problem solving",
+          "API development (FastAPI)",
+          "Introduction to Pandas & NumPy for Data Science",
+          "Data Cleaning & Preprocessing",
+          "3 Python Projects to GitHub",
         ],
       },
       {
@@ -452,17 +456,18 @@ export default function Dashboard() {
           "C Basics & Core Concepts",
           "DSA Foundation",
           "Pointers & Memory Concepts",
-          "2 Projects"
+          "3 Projects (GitHub)",
         ],
         syllabus: [
-          "C basics: variables, operators, I/O",
+          "Introduction to C Programming Language",
+          "C basics: variables, operators, data types",
+          "Input & Output Functions (printf, scanf)",
           "Control structures & loops",
-          "Functions & recursion",
+          "Functions",
           "Arrays & strings",
           "Pointers & memory concepts",
-          "Structures & unions",
           "DSA foundation: arrays, linked list basics",
-          "Problem solving & practice",
+          "3 Projects (GitHub)",
         ],
       },
     ],
@@ -490,7 +495,6 @@ export default function Dashboard() {
           "Firebase Auth & Firestore",
           "Local storage (SharedPreferences, SQLite)",
           "Live project: Build a full app",
-          "Play Store deployment basics",
         ],
       },
       {
@@ -596,42 +600,96 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-10">
+    <div className="flex flex-1 flex-col gap-6">
       {/* HERO */}
 
+      {/* HERO */}
       <motion.section
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative overflow-hidden px-4 py-4 sm:px-6 sm:py-6"
+        className="relative overflow-hidden px-4 py-10 sm:px-2 sm:py-2"
       >
+        {/* Background glow */}
+        <div className="absolute -top-20 -left-20 w-72 h-72 bg-blue-400/30 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-cyan-400/30 rounded-full blur-3xl"></div>
 
-        <div className="grid items-center gap-2 md:grid-cols-[auto_auto] justify-center">          
+        <div className="relative flex flex-col md:flex-row items-center justify-center gap-2">
+          
           {/* LEFT IMAGE */}
-          <div className="flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex justify-center"
+          >
             <img
-              src={logo} 
-              // alt="Programmers Academy"
-              className="w-30 sm:w-50 md:w-60"
+              src={logo}
+              className="w-48 sm:w-64 md:w-80 drop-shadow-xl"
             />
-          </div>
+          </motion.div>
 
           {/* RIGHT CONTENT */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-3 sm:space-y-4">
-            
-            <h1 className="bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-2xl font-extrabold tracking-tight text-transparent sm:text-3xl md:text-4xl">
+          <div className="text-center md:text-left space-y-4">
+            <h1 className="text-3xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 via-sky-600 to-cyan-500 bg-clip-text text-transparent">
               The Programmers Academy
             </h1>
-
-            <p className="max-w-xl text-xs text-slate-600 sm:text-sm">
-              आम्ही{" "}
-              <span className="font-semibold text-blue-500">Programmers</span>{" "}
-              घडवतो...
+            <p className="text-sm md:text-base text-slate-600">
+              {"Learn. Code. Build. Repeat."}
             </p>
+            
+            {/* <p className="text-sm md:text-base text-slate-600">
+              आम्ही{" "}
+              <span className="font-semibold text-blue-500">
+                Programmers
+              </span>{" "}
+              घडवतो...
+            </p> */}
+
+            {/* CTA Buttons */}
+            <div className="flex gap-5 justify-center md:justify-start">
+              <button
+                onClick={handleExploreClick}
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-md hover:scale-105 active:scale-95 transition"
+              >
+                Explore Courses
+              </button>
+
+              <button 
+                onClick={handleExploreClick}
+                className="px-5 py-2.5 rounded-xl border border-slate-300 font-semibold hover:bg-slate-100 transition">
+                Free Demo
+              </button>
+            </div>
           </div>
+
+          {/* WhatsApp Bottom Right */}
+          <div className="absolute bottom-1 right-1 sm:bottom-1 sm:right-1 flex items-center gap-2 bg-white/90 backdrop-blur-md border border-slate-200 shadow-md rounded-full px-3 py-1.5">
+
+            {/* Icon */}
+            <a
+              href="https://wa.me/919878881818"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center h-5 w-5 rounded-full bg-green-500 text-white hover:scale-110 transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-3.5 h-3.5"
+              >
+                <path d="M12 2C6.48 2 2 6.48 2 12c0 1.9.5 3.67 1.37 5.2L2 22l4.9-1.28A9.93 9.93 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.2 14.2c-.2.5-1.1.9-1.5 1-.4.1-.9.2-3-.7-2.6-1.1-4.2-3.8-4.3-4-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.7 1.7.8 1.8.1.2.1.3 0 .5-.1.2-.2.3-.3.5-.2.2-.3.4-.5.6-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.8.3.1.5.1.7-.1.2-.2.8-.9 1-1.2.2-.3.4-.3.7-.2.3.1 1.8.8 2.1.9.3.1.5.2.6.3.1.1.1.8-.1 1.3z" />
+              </svg>
+            </a>
+
+            {/* Number */}
+            <span className="text-xs font-semibold text-slate-700">
+              +91 98788 81818
+            </span>
+          </div>
+
         </div>
       </motion.section>
-
 
       {/* COURSES: syllabus first, then enroll */}
       <section id="courses-section" className="space-y-6">
@@ -690,14 +748,33 @@ export default function Dashboard() {
                     ))}
                   </ul>
 
-                  <button
+                  <div className="mt-4 flex gap-3 justify-center">
+                    <button
+                      type="button"
+                      onClick={() => openCourseForm(course)}
+                      className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-slate-300 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                    >
+                      Course Syllabus
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => openCourseForm(course)}
+                      className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 py-2.5 text-sm font-semibold text-white shadow-md transition hover:scale-105"
+                    >
+                      Enroll Now
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </div>
+
+                  {/* <button
                     type="button"
                     onClick={() => openCourseForm(course)}
                     className="mt-4 flex w-1/2 mx-auto items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-95"
                   >
                     Enroll now
                     <ArrowRight className="h-4 w-4" />
-                  </button>
+                  </button> */}
                 </div>
               </motion.div>
             );
@@ -734,9 +811,14 @@ export default function Dashboard() {
                 <div className="flex flex-1 flex-col p-4">
                   <div className="flex items-center justify-between gap-2">
                     <h3 className="font-semibold text-slate-900">{s.title}</h3>
-                    <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                    {/* <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                      FREE
+                    </span> */}
+
+                    <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-emerald-600 to-green-400 px-3 py-1 text-xm font-bold text-white shadow-md animate-bounce">
                       FREE
                     </span>
+
                   </div>
                   <div className="mt-2 flex items-center gap-3 text-xs text-slate-600">
                     <span className="flex items-center gap-1">
@@ -765,7 +847,7 @@ export default function Dashboard() {
                     onClick={() => openSessionForm(s)}
                     className="mt-4 flex w-1/2 mx-auto items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-95"
                   >
-                    Register for Free
+                    Register
                     {/* <ArrowRight className="h-4 w-4" /> */}
                   </button>
                 </div>
@@ -808,7 +890,7 @@ export default function Dashboard() {
                 Phone
               </div>
               <div className="text-sm font-bold text-slate-900">
-                9878 881818
+                9878881818
               </div>
             </motion.div>
 
@@ -856,8 +938,9 @@ export default function Dashboard() {
               <div className="flex items-center gap-2">
                 {[
                   { Icon: Instagram, label: "Instagram" },
-                  { Icon: Linkedin, label: "LinkedIn" },
-                  { Icon: Youtube, label: "YouTube" },
+                  { Icon: Facebook, label: "Facebook" },
+                  // { Icon: Linkedin, label: "LinkedIn" },
+                  // { Icon: Youtube, label: "YouTube" },
                 ].map(({ Icon, label }) => (
                   <motion.button
                     key={label}
