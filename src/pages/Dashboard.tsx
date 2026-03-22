@@ -20,6 +20,7 @@ import {
 import { createRegistration } from "../services/registration";
 import { AnimatePresence, motion } from "framer-motion";
 import { Laptop } from "lucide-react";
+import logo from "../images/logo.png";
 
 type Course = {
   id: string;
@@ -637,108 +638,63 @@ export default function Dashboard() {
   return (
     <div className="flex flex-1 flex-col gap-10">
       {/* HERO */}
+
       <motion.section
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="card-glass relative overflow-hidden px-5 py-6 sm:px-8 sm:py-8"
+        className="relative overflow-hidden px-4 py-4 sm:px-6 sm:py-6"
       >
-        <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-b from-blue-100/60 to-cyan-100/40 sm:block" />
+        <div className="grid items-center gap-2 md:grid-cols-[auto_auto] justify-center">          
+          {/* LEFT IMAGE */}
+          <div className="flex justify-center">
+            <img
+              src={logo} 
+              // alt="Programmers Academy"
+              className="w-30 sm:w-50 md:w-60"
+            />
+          </div>
 
-        <div className="relative grid gap-6 sm:grid-cols-[minmax(0,2fr)_minmax(0,0.85fr)] items-center">
-          <div className="space-y-3 sm:space-y-4">
-            {/* <div className="inline-flex items-center gap-2 rounded-full bg-blue-50/80 px-3 py-1 text-[11px] font-semibold text-blue-700 ring-1 ring-blue-100">
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>Learn · Build · Grow</span>
-            </div> */}
-
+          {/* RIGHT CONTENT */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-3 sm:space-y-4">
+            
             <h1 className="bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-2xl font-extrabold tracking-tight text-transparent sm:text-3xl md:text-4xl">
               The Programmers Academy
             </h1>
 
             <p className="max-w-xl text-xs text-slate-600 sm:text-sm">
               आम्ही{" "}
-              <span className="font-semibold text-blue-700">Programmers</span>{" "}
-              घडवतो
+              <span className="font-semibold text-blue-500">Programmers</span>{" "}
+              घडवतो...
             </p>
 
-            <div className="flex flex-wrap items-center gap-3 pt-1 sm:pt-2">
-              <button onClick={handleExploreClick} className="btn-primary">
-                <span className="inline-flex items-center gap-1.5">
-                  Explore Courses
-                  <ArrowRight className="h-4 w-4" />
-                </span>
-              </button>
-
-              {/* <div className="flex items-center gap-2 text-[11px] text-slate-600 sm:text-xs">
-                <div className="flex items-center -space-x-2">
-                  <div className="h-7 w-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-[10px] font-bold text-white shadow-md flex items-center justify-center">
-                    A
-                  </div>
-                  <div className="h-7 w-7 rounded-full bg-gradient-to-br from-indigo-500 to-sky-500 text-[10px] font-bold text-white shadow-md flex items-center justify-center">
-                    S
-                  </div>
-                  <div className="h-7 w-7 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-[10px] font-bold text-white shadow-md flex items-center justify-center">
-                    R
-                  </div>
-                </div>
-                <span>500+ students already learning with us</span>
-              </div> */}
-            </div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-            className="card-glass relative hidden h-full min-h-[180px] items-center justify-center rounded-3xl bg-gradient-to-br from-blue-600 via-sky-500 to-cyan-400 p-4 text-white shadow-2xl sm:flex"
-          >
-            <div className="absolute -top-6 -right-6 h-16 w-16 rounded-full bg-white/20 blur-xl" />
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                {/* Flutter pill */}
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold">
-                  <Smartphone className="h-3.5 w-3.5" />
-                  <span>Flutter</span>
-                </div>
-
-                {/* FREE pill */}
-                <div className="inline-flex items-center rounded-full bg-emerald-400/20 px-3 py-1 text-[12px] font-semibold text-emerald-100">
-                  FREE
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <p className="text-xs font-medium text-blue-50/90">
-                  Next Free Demo Session
-                </p>
-                <p className="text-sm font-semibold">
-                  {sessions[0]?.title ?? "Programming Demo Session"}
-                </p>
-
-                <div className="flex items-center gap-2 text-[11px] text-blue-50">
-                  <Calendar className="h-3.5 w-3.5" />
-                  <span>{sessions[0]?.dateText}</span>
-                </div>
-                <div className="flex items-center gap-2 text-[11px] text-blue-50">
-                  <Clock className="h-3.5 w-3.5" />
-                  <span>{sessions[0]?.timeText}</span>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-center pt-2 min-h-[48px]">
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-[11px] font-medium text-blue-50">
-                  <Laptop className="h-4 w-4" />
-                  <span>Mode: Online</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </motion.section>
 
+      {/* <motion.section
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative overflow-hidden px-1 py-1 sm:px-1 sm:py-1"
+      >
+        <div className="flex flex-col items-center justify-center text-center min-h-[100px] space-y-3 sm:space-y-4">
+          
+          <h1 className="bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-2xl font-extrabold tracking-tight text-transparent sm:text-3xl md:text-4xl">
+            The Programmers Academy
+          </h1>
+
+          <p className="max-w-xl text-xs text-slate-600 sm:text-sm">
+            आम्ही{" "}
+            <span className="font-semibold text-blue-500">Programmers</span>{" "}
+            घडवतो...
+          </p>
+        </div>
+      </motion.section> */}
+
       {/* STATS */}
-      <motion.section
+      {/* <motion.section
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -763,7 +719,7 @@ export default function Dashboard() {
             </div>
           </motion.div>
         ))}
-      </motion.section>
+      </motion.section> */}
 
       {/* COURSES: syllabus first, then enroll */}
       <section id="courses-section" className="space-y-6">
@@ -825,7 +781,7 @@ export default function Dashboard() {
                   <button
                     type="button"
                     onClick={() => openCourseForm(course)}
-                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-95"
+                    className="mt-4 flex w-1/2 mx-auto items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-95"
                   >
                     Enroll now
                     <ArrowRight className="h-4 w-4" />
@@ -895,10 +851,10 @@ export default function Dashboard() {
                   <button
                     type="button"
                     onClick={() => openSessionForm(s)}
-                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-95"
+                    className="mt-4 flex w-1/2 mx-auto items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-95"
                   >
-                    Register for session
-                    <ArrowRight className="h-4 w-4" />
+                    Register for Free
+                    {/* <ArrowRight className="h-4 w-4" /> */}
                   </button>
                 </div>
               </motion.div>
