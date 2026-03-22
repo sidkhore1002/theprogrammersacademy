@@ -572,34 +572,6 @@ export default function Dashboard() {
   const [selectedCourseId, setSelectedCourseId] = useState(courses[0].id);
   const [heading, setHeading] = useState("");
   const [subHeading, setSubHeading] = useState("");
-  // const [testimonialIndex, setTestimonialIndex] = useState(0);
-
-  // const testimonials = useMemo(
-  //   () => [
-  //     {
-  //       id: 1,
-  //       name: "Akshay Patil",
-  //       title: "Flutter Developer",
-  //       quote:
-  //         "The Programmers Academy helped me go from zero to publishing my first app on the Play Store.",
-  //     },
-  //     {
-  //       id: 2,
-  //       name: "Sneha Kulkarni",
-  //       title: "Python & Data Enthusiast",
-  //       quote:
-  //         "The teaching style is very practical and project-focused. It boosted my confidence in coding interviews.",
-  //     },
-  //     {
-  //       id: 3,
-  //       name: "Rohit Deshmukh",
-  //       title: "C Programming Student",
-  //       quote:
-  //         "DSA and pointers finally made sense. The small batch size and personal guidance really helped.",
-  //     },
-  //   ],
-  //   []
-  // );
 
   const openCourseForm = (course: Course) => {
     setMode("course");
@@ -623,18 +595,6 @@ export default function Dashboard() {
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  // const currentTestimonial = testimonials[testimonialIndex];
-
-  // const goNextTestimonial = () => {
-  //   setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
-  // };
-
-  // const goPrevTestimonial = () => {
-  //   setTestimonialIndex((prev) =>
-  //     prev === 0 ? testimonials.length - 1 : prev - 1
-  //   );
-  // };
-
   return (
     <div className="flex flex-1 flex-col gap-10">
       {/* HERO */}
@@ -645,6 +605,7 @@ export default function Dashboard() {
         transition={{ duration: 0.5 }}
         className="relative overflow-hidden px-4 py-4 sm:px-6 sm:py-6"
       >
+
         <div className="grid items-center gap-2 md:grid-cols-[auto_auto] justify-center">          
           {/* LEFT IMAGE */}
           <div className="flex justify-center">
@@ -667,59 +628,10 @@ export default function Dashboard() {
               <span className="font-semibold text-blue-500">Programmers</span>{" "}
               घडवतो...
             </p>
-
           </div>
-
         </div>
       </motion.section>
 
-      {/* <motion.section
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="relative overflow-hidden px-1 py-1 sm:px-1 sm:py-1"
-      >
-        <div className="flex flex-col items-center justify-center text-center min-h-[100px] space-y-3 sm:space-y-4">
-          
-          <h1 className="bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 bg-clip-text text-2xl font-extrabold tracking-tight text-transparent sm:text-3xl md:text-4xl">
-            The Programmers Academy
-          </h1>
-
-          <p className="max-w-xl text-xs text-slate-600 sm:text-sm">
-            आम्ही{" "}
-            <span className="font-semibold text-blue-500">Programmers</span>{" "}
-            घडवतो...
-          </p>
-        </div>
-      </motion.section> */}
-
-      {/* STATS */}
-      {/* <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.5 }}
-        className="grid gap-4 sm:grid-cols-3"
-      >
-        {[
-          { label: "Students Enrolled", value: "75+" },
-          { label: "Courses Available", value: "3" },
-          { label: "Placement Support", value: "Yes" },
-        ].map((item) => (
-          <motion.div
-            key={item.label}
-            whileHover={{ y: -4, scale: 1.01 }}
-            className="card-glass flex flex-col items-center justify-center px-4 py-3 text-center"
-          >
-            <div className="text-sm font-extrabold text-blue-700 sm:text-base">
-              {item.value}
-            </div>
-            <div className="mt-1 text-[11px] font-medium text-slate-600 sm:text-xs">
-              {item.label}
-            </div>
-          </motion.div>
-        ))}
-      </motion.section> */}
 
       {/* COURSES: syllabus first, then enroll */}
       <section id="courses-section" className="space-y-6">
@@ -862,90 +774,6 @@ export default function Dashboard() {
           })}
         </div>
       </section>
-
-      {/* TESTIMONIALS */}
-      {/* <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.5 }}
-        className="card-glass overflow-hidden px-5 py-5 sm:px-7 sm:py-6"
-      >
-        <div className="mb-4 flex items-center justify-between gap-2">
-          <div>
-            <h2 className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-lg font-extrabold text-transparent">
-              ⭐ Student Stories
-            </h2>
-            <p className="mt-1 text-[11px] text-slate-600 sm:text-xs">
-              Real feedback from learners at The Programmers Academy.
-            </p>
-          </div>
-
-          <div className="hidden text-[11px] text-slate-500 sm:block">
-            Swipe through to see more
-          </div>
-        </div>
-
-        <div className="relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentTestimonial.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.35 }}
-              className="rounded-2xl bg-white/70 p-4 shadow-sm"
-            >
-              <p className="text-[11px] leading-relaxed text-slate-700 sm:text-sm">
-                “{currentTestimonial.quote}”
-              </p>
-
-              <div className="mt-3 flex items-center justify-between gap-3">
-                <div>
-                  <div className="text-xs font-semibold text-slate-900 sm:text-sm">
-                    {currentTestimonial.name}
-                  </div>
-                  <div className="text-[10px] text-slate-500 sm:text-[11px]">
-                    {currentTestimonial.title}
-                  </div>
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={goPrevTestimonial}
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    type="button"
-                    onClick={goNextTestimonial}
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50"
-                  >
-                    ›
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="mt-3 flex justify-center gap-1.5">
-            {testimonials.map((t, index) => (
-              <button
-                key={t.id}
-                type="button"
-                onClick={() => setTestimonialIndex(index)}
-                className={`h-1.5 rounded-full transition-all ${
-                  testimonialIndex === index
-                    ? "w-4 bg-blue-600"
-                    : "w-2 bg-slate-300"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      </motion.section> */}
 
       {/* CONTACT + SOCIAL */}
       <footer className="mt-auto">
