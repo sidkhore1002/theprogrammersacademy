@@ -1,16 +1,258 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Academy Website Design</title>
-    <meta property="og:image" content="https://bolt.new/static/og_default.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://bolt.new/static/og_default.png" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Programmers Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <img src="logo.png" alt="The Programmers Academy Logo" class="logo-img">
+            </a>
+
+            <nav class="nav-links" id="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#courses" class="nav-link">Courses</a>
+                <a href="#contact" class="nav-link">Contact Us</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button id="whatsapp-btn" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> <span>Enquire Now</span>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="hero-container">
+                <div class="hero-text reveal-left">
+                    <div class="badge">🚀 Kickstart Your Career</div>
+                    <h1>Build Your Future with <span class="highlight">Programming</span></h1>
+                    <h2>Learn. Code. Grow. Get Placed.</h2>
+                    <p>Join our industry-ready programming courses designed by experts to help you master coding, build
+                        real-world projects, and secure your dream job.</p>
+                    <div class="cta-group">
+                        <a href="#courses" class="btn-primary">Explore Courses</a>
+                        <a href="#contact" class="btn-secondary">Contact Us</a>
+                    </div>
+                </div>
+                <div class="hero-image reveal-right">
+                    <div class="illustration-container glass-panel">
+                        <i class="fas fa-laptop-code main-icon"></i>
+                        <div class="floating-icon icon-1"><i class="fab fa-cuttlefish"></i></div>
+                        <div class="floating-icon icon-2"><i class="fas fa-sitemap"></i></div>
+                        <div class="floating-icon icon-3"><i class="fab fa-node-js"></i></div>
+                        <div class="floating-icon icon-4"><i class="fab fa-html5"></i></div>
+                        <div class="floating-icon icon-5"><i class="fab fa-css3-alt"></i></div>
+                        <div class="floating-icon icon-6"><i class="fab fa-js-square"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </section>
+
+
+        <!-- Courses -->
+        <section id="courses" class="courses-section section-padding bg-light">
+            <div class="section-header reveal-up">
+                <h2>Our Premium Courses</h2>
+                <p>Choose the path that fits your career goals.</p>
+            </div>
+
+            <div class="courses-grid">
+                <!-- Course 1 -->
+                <div class="course-card reveal-up">
+                    <div class="course-header">
+                        <div class="course-icon-large"><i class="fas fa-code"></i></div>
+                        <div class="course-badge">Most Popular</div>
+                    </div>
+                    <div class="course-body">
+                        <h3>Placement-Oriented Programming</h3>
+
+
+                        <div class="course-meta">
+                            <span class="meta-item"><i class="far fa-clock"></i> 2 Months</span>
+                            <span class="meta-item"><i class="fas fa-signal"></i> Beginner Friendly</span>
+                        </div>
+
+                        <div class="course-features">
+                            <h4>Course Highlights:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Duration: 2 Months</li>
+                                <li><i class="fas fa-check"></i> Resume building and Interview preparation</li>
+                                <li><i class="fas fa-check"></i> 2 Mock Interviews</li>
+                                <li><i class="fas fa-check"></i> Certificate of Course Completion</li>
+                                <li><i class="fas fa-check"></i> C Programming Fundamentals</li>
+                                <li><i class="fas fa-check"></i> Data Structures & Algorithms (DSA)</li>
+                                <li><i class="fas fa-check"></i> Placement Oriented problem solving (50 Programs)</li>
+                                <li><i class="fas fa-check"></i> Placement Oriented 3 Projects</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="course-footer">
+                        <a href="https://wa.me/919730207552?text=Hello%20The%20Programmers%20Academy%2C%20I%20want%20to%20enquire%20about%20the%20Placement-Oriented%20Programming%20course." target="_blank" rel="noopener noreferrer" class="btn-primary full-width"><i class="fab fa-whatsapp"></i> Enquire Now</a>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="course-card reveal-up" style="transition-delay: 0.2s;">
+                    <div class="course-header" style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
+                        <div class="course-icon-large"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="course-badge" style="background: #FFC107; color: #000;">High Demand</div>
+                    </div>
+                    <div class="course-body">
+                        <h3>Full Stack Mobile App Development</h3>
+
+
+                        <div class="course-meta">
+                            <span class="meta-item"><i class="far fa-clock"></i> 2 Months</span>
+                            <span class="meta-item"><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+
+                        <div class="course-features">
+                            <h4>Course Highlights:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Duration: 2 Months</li>
+                                <li><i class="fas fa-check"></i> Live sessions: weekly 3 live sessions (Online)</li>
+                                <li><i class="fas fa-check"></i> Resume building and Interview preparation</li>
+                                <li><i class="fas fa-check"></i> 2 Mock Interviews</li>
+                                <li><i class="fas fa-check"></i> Certificate of Course Completion</li>
+                                <li><i class="fas fa-check"></i> Flutter Fundamentals</li>
+                                <li><i class="fas fa-check"></i> Backend Development with Node.js</li>
+                                <li><i class="fas fa-check"></i> Firebase & API Integration</li>
+                                <li><i class="fas fa-check"></i> App Deployments</li>
+                                <li><i class="fas fa-check"></i> Industry-Level Projects:</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="course-footer">
+                        <a href="https://wa.me/919730207552?text=Hello%20The%20Programmers%20Academy%2C%20I%20want%20to%20enquire%20about%20the%20Full%20Stack%20Mobile%20App%20Development%20course." target="_blank" rel="noopener noreferrer" class="btn-primary full-width"><i class="fab fa-whatsapp"></i> Enquire Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Contact Us -->
+        <section id="contact" class="contact-section section-padding">
+            <div class="section-header reveal-up">
+                <h2>Get In Touch</h2>
+
+            </div>
+
+            <div class="contact-container reveal-up">
+                <div class="contact-info-panel">
+                    <h3>Contact Information</h3>
+                    <p>Fill up the form and our team will get back to you within 24 hours.</p>
+
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+91 97302 07552</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>contact@theprogrammersacademy.com</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="social-links-contact">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="contact-form-panel">
+                    <form id="contact-form" novalidate>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" placeholder="John Doe">
+                            <span class="error-msg" id="name-error">Name is required</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" placeholder="+91 97302 07552">
+                            <span class="error-msg" id="phone-error">Valid phone number is required</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="course">Course Interested In</label>
+                            <select id="course">
+                                <option value="" disabled selected>Select a course</option>
+                                <option value="placement">Placement-Oriented Programming</option>
+                                <option value="fullstack">Full Stack Mobile App Development</option>
+                                <option value="other">Other / General Inquiry</option>
+                            </select>
+                            <span class="error-msg" id="course-error">Please select a course</span>
+                        </div>
+
+                        <button type="submit" class="btn-primary"><i class="fab fa-whatsapp"></i> Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="logo.png" alt="The Programmers Academy Logo" class="footer-logo-img">
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul class="contact-list-footer">
+                    <li><i class="fas fa-phone-alt"></i> +91 97302 07552</li>
+                    <li><i class="fas fa-envelope"></i> contact@theprogrammersacademy.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 The Programmers Academy. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
 </html>
