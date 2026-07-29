@@ -135,11 +135,8 @@ if (contactForm) {
         
         const nameInput = document.getElementById('name');
         const phoneInput = document.getElementById('phone');
-        const emailInput = document.getElementById('email');
         const courseInput = document.getElementById('course');
-        const messageInput = document.getElementById('message');
         
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phonePattern = /^\+?[\d\s-]{10,}$/;
 
         if (!nameInput.value.trim()) {
@@ -159,16 +156,6 @@ if (contactForm) {
             removeError(phoneInput);
         }
 
-        if (!emailInput.value.trim()) {
-            showError(emailInput, 'Email is required');
-            isValid = false;
-        } else if (!emailPattern.test(emailInput.value.trim())) {
-            showError(emailInput, 'Please enter a valid email address');
-            isValid = false;
-        } else {
-            removeError(emailInput);
-        }
-
         if (!courseInput.value) {
             showError(courseInput, 'Please select a course');
             isValid = false;
@@ -176,22 +163,10 @@ if (contactForm) {
             removeError(courseInput);
         }
 
-        if (!messageInput.value.trim()) {
-            showError(messageInput, 'Message is required');
-            isValid = false;
-        } else if (messageInput.value.trim().length < 10) {
-            showError(messageInput, 'Message must be at least 10 characters');
-            isValid = false;
-        } else {
-            removeError(messageInput);
-        }
-
         if (isValid) {
             const name = nameInput.value.trim();
             const phone = phoneInput.value.trim();
-            const email = emailInput.value.trim();
             const courseText = courseInput.options[courseInput.selectedIndex].text;
-            const userMessage = messageInput.value.trim();
             
             const whatsappNumber = '919730207552';
             const textMessage = `Hello The Programmers Academy,
@@ -200,9 +175,7 @@ I have submitted an enquiry via your website form:
 
 • *Name:* ${name}
 • *Phone:* ${phone}
-• *Email:* ${email}
-• *Course Interested In:* ${courseText}
-• *Message:* ${userMessage}`;
+• *Course Interested In:* ${courseText}`;
 
             const encodedMessage = encodeURIComponent(textMessage);
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;

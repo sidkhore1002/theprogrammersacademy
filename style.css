@@ -62,7 +62,7 @@ a {
 }
 
 /* Buttons */
-.btn-primary, .btn-secondary {
+.btn-primary, .btn-secondary, .btn-gold {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -85,6 +85,23 @@ a {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 112, 243, 0.5);
     color: white;
+}
+
+.btn-gold {
+    background: linear-gradient(135deg, #F3C72F, #FFFFFF);
+    color: #111827;
+    box-shadow: 0 4px 15px rgba(243, 199, 47, 0.3);
+}
+
+.btn-gold:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(243, 199, 47, 0.5);
+    color: #000000;
+}
+
+.btn-small {
+    padding: 10px 24px;
+    font-size: 1rem;
 }
 
 .btn-secondary {
@@ -367,12 +384,13 @@ a {
     color: var(--primary-color);
 }
 
-.icon-1 { top: 10%; left: -20px; color: #00599C; animation: float 5s ease-in-out infinite 0.5s; }
-.icon-2 { top: 40%; right: -30px; color: #F24E1E; animation: float 7s ease-in-out infinite 1s; }
-.icon-3 { bottom: 10%; left: 10%; color: #68A063; animation: float 6s ease-in-out infinite 1.5s; }
+.icon-1 { top: 10%; left: -10px; color: #00599C; animation: float 5s ease-in-out infinite 0.5s; }
+.icon-2 { top: 50%; right: -30px; color: #F24E1E; animation: float 7s ease-in-out infinite 1s; }
+.icon-3 { bottom: 10%; left: 10px; color: #68A063; animation: float 6s ease-in-out infinite 1.5s; }
 .icon-4 { bottom: 20%; right: 10%; color: #E34F26; animation: float 5.5s ease-in-out infinite 0.2s; }
-.icon-5 { top: -20px; right: 20%; color: #1572B6; animation: float 6.5s ease-in-out infinite 0.8s; }
-.icon-6 { bottom: -20px; left: 40%; color: #F7DF1E; animation: float 5.2s ease-in-out infinite 1.2s; }
+.icon-5 { top: 10%; right: -10px; color: #1572B6; animation: float 6.5s ease-in-out infinite 0.8s; }
+.icon-6 { bottom: 10%; right: 10px; color: #F7DF1E; animation: float 5.2s ease-in-out infinite 1.2s; }
+.icon-7 { top: 50%; left: -30px; color: #54C5F8; animation: float 5.8s ease-in-out infinite 0.7s; }
 
 .hero-shapes .shape {
     position: absolute;
@@ -848,7 +866,7 @@ a {
 
 .footer-container {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 40px;
     max-width: 1300px;
     margin: 0 auto 60px;
@@ -1010,17 +1028,17 @@ a {
 @media (max-width: 992px) {
     .hero-container {
         flex-direction: column;
-        text-align: center;
+        text-align: left;
         padding-top: 50px;
     }
     .hero-text {
         max-width: 100%;
     }
     .hero-text p {
-        margin: 0 auto 30px;
+        margin: 0 0 30px 0;
     }
     .cta-group {
-        justify-content: center;
+        justify-content: flex-start;
     }
     .illustration-container {
         width: 350px;
