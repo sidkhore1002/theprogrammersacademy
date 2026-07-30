@@ -206,6 +206,7 @@ a {
 .logo-img {
     height: 85px;
     width: auto;
+    mix-blend-mode: multiply;
     transition: var(--transition);
 }
 
@@ -881,9 +882,9 @@ a {
 }
 
 .footer-logo-img {
-    height: 95px;
+    height: 100px;
     width: auto;
-    background: #ffffff;
+    mix-blend-mode: multiply;
     padding: 6px 14px;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
