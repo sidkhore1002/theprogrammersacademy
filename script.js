@@ -12,11 +12,11 @@ window.addEventListener('scroll', () => {
     } else {
         navbar.classList.remove('scrolled');
     }
-    
+
     // Active link highlighting
     let current = '';
     const sections = document.querySelectorAll('section');
-    
+
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
@@ -62,7 +62,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         if (targetId === '#') return;
-        
+
         const target = document.querySelector(targetId);
         if (target) {
             window.scrollTo({
@@ -79,7 +79,7 @@ const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .rev
 function reveal() {
     const windowHeight = window.innerHeight;
     const elementVisible = 100;
-    
+
     revealElements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
         if (elementTop < windowHeight - elementVisible) {
@@ -98,29 +98,16 @@ const whatsappBtn = document.getElementById('whatsapp-btn');
 
 whatsappBtn.addEventListener('click', () => {
     const phoneNumber = '919730207552'; // Updated with official number
-    
+
     const message = `Hello The Programmers Academy,
 
 I would like to know more about your courses.
-
-Please share details regarding:
-
-• Placement-Oriented Programming
-• Full Stack Mobile App Development
-
-Including:
-- Course Syllabus
-- Fees
-- Duration
-- Batch Timings
-- Upcoming Batches
-- Placement Assistance
 
 Thank you.`;
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-    
+
     window.open(whatsappUrl, '_blank');
 });
 
@@ -130,13 +117,13 @@ const contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
+
         let isValid = true;
-        
+
         const nameInput = document.getElementById('name');
         const phoneInput = document.getElementById('phone');
         const courseInput = document.getElementById('course');
-        
+
         const phonePattern = /^\+?[\d\s-]{10,}$/;
 
         if (!nameInput.value.trim()) {
@@ -167,7 +154,7 @@ if (contactForm) {
             const name = nameInput.value.trim();
             const phone = phoneInput.value.trim();
             const courseText = courseInput.options[courseInput.selectedIndex].text;
-            
+
             const whatsappNumber = '919730207552';
             const textMessage = `Hello The Programmers Academy,
 
@@ -179,15 +166,15 @@ I have submitted an enquiry via your website form:
 
             const encodedMessage = encodeURIComponent(textMessage);
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-            
+
             // Redirect to WhatsApp
             window.open(whatsappUrl, '_blank');
-            
+
             const btn = contactForm.querySelector('button');
             const originalHTML = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting...';
             btn.disabled = true;
-            
+
             setTimeout(() => {
                 const toast = document.getElementById('toast');
                 if (toast) {
@@ -196,7 +183,7 @@ I have submitted an enquiry via your website form:
                         toast.classList.remove('show');
                     }, 4000);
                 }
-                
+
                 contactForm.reset();
                 btn.innerHTML = originalHTML;
                 btn.disabled = false;

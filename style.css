@@ -1100,6 +1100,12 @@ a {
 }
 
 @media (max-width: 768px) {
+    .btn-primary, .btn-secondary, .btn-gold {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        white-space: nowrap;
+    }
+
     .navbar { padding: 0 20px; height: 75px; }
     .logo-img { height: 55px; }
     .navbar.scrolled .logo-img { height: 50px; }
@@ -1136,12 +1142,12 @@ a {
         border-radius: 10px;
     }
     
-    .icon-1 { left: 10px; top: 15%; }
-    .icon-2 { right: 10px; }
-    .icon-3 { left: 25px; }
-    .icon-5 { right: 10px; top: 15%; }
-    .icon-6 { right: 25px; }
-    .icon-7 { left: 10px; }
+    .icon-1 { left: -5px; top: 15%; }
+    .icon-2 { right: -5px; }
+    .icon-3 { left: 15px; }
+    .icon-5 { right: -5px; top: 15%; }
+    .icon-6 { right: 15px; }
+    .icon-7 { left: -5px; }
     
     .nav-link {
         font-size: 1.2rem;
