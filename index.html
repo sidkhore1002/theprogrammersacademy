@@ -52,15 +52,16 @@
                     </div>
                 </div>
                 <div class="hero-image reveal-right">
-                    <div class="illustration-container glass-panel">
-                        <i class="fas fa-laptop-code main-icon"></i>
-                        <div class="floating-icon icon-1"><i class="fab fa-cuttlefish"></i></div>
-                        <div class="floating-icon icon-2"><i class="fas fa-sitemap"></i></div>
-                        <div class="floating-icon icon-3"><i class="fab fa-node-js"></i></div>
-                        <div class="floating-icon icon-5"><i class="fab fa-css3-alt"></i></div>
-                        <div class="floating-icon icon-6"><i class="fab fa-js-square"></i></div>
-                        <div class="floating-icon icon-7"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                fill="currentColor" width="1em" height="1em">
+                    <div class="illustration-container glass-panel" style="padding: 0; background: none; border: none;">
+                        <img src="hero-image.png" alt="Programming Hero"
+                            style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 30px; position: absolute; z-index: 0;">
+                        <div class="floating-icon icon-1" style="z-index: 1;"><i class="fab fa-cuttlefish"></i></div>
+                        <div class="floating-icon icon-2" style="z-index: 1;"><i class="fas fa-sitemap"></i></div>
+                        <div class="floating-icon icon-3" style="z-index: 1;"><i class="fab fa-node-js"></i></div>
+                        <div class="floating-icon icon-5" style="z-index: 1;"><i class="fab fa-css3-alt"></i></div>
+                        <div class="floating-icon icon-6" style="z-index: 1;"><i class="fab fa-js-square"></i></div>
+                        <div class="floating-icon icon-7" style="z-index: 1;"><svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em">
                                 <path
                                     d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.457 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z" />
                             </svg></div>
@@ -85,8 +86,9 @@
             <div class="courses-grid">
                 <!-- Course 1 -->
                 <div class="course-card reveal-up">
-                    <div class="course-header">
-                        <div class="course-icon-large"><i class="fas fa-code"></i></div>
+                    <div class="course-header" style="padding: 0; background: none; overflow: hidden;">
+                        <img src="course-1.png" alt="Placement-Oriented Programming"
+                            style="width: 100%; height: auto; aspect-ratio: 2.35 / 1; object-fit: cover; display: block;">
                         <div class="course-badge">Most Popular</div>
                     </div>
                     <div class="course-body">
@@ -96,7 +98,7 @@
                         <div class="course-meta" style="flex-wrap: wrap; gap: 10px 15px;">
                             <span class="meta-item"><i class="far fa-clock"></i> 2 Months</span>
                             <span class="meta-item"><i class="fas fa-signal"></i> Beginner Friendly</span>
-                            <span class="meta-item" style="width: 100%;"><i class="fas fa-laptop"></i> Online Session</span>
+                            <span class="meta-item"><i class="fas fa-laptop"></i> Online Session</span>
                         </div>
 
                         <div class="course-features">
@@ -123,8 +125,9 @@
 
                 <!-- Course 2 -->
                 <div class="course-card reveal-up" style="transition-delay: 0.2s;">
-                    <div class="course-header" style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
-                        <div class="course-icon-large"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="course-header" style="padding: 0; background: none; overflow: hidden;">
+                        <img src="course-2.png" alt="Full Stack Mobile App Development"
+                            style="width: 100%; height: auto; aspect-ratio: 2.35 / 1; object-fit: cover; display: block;">
                         <div class="course-badge" style="background: #FFC107; color: #000;">High Demand</div>
                     </div>
                     <div class="course-body">
@@ -134,7 +137,7 @@
                         <div class="course-meta" style="flex-wrap: wrap; gap: 10px 15px;">
                             <span class="meta-item"><i class="far fa-clock"></i> 2 Months</span>
                             <span class="meta-item"><i class="fas fa-signal"></i> Intermediate</span>
-                            <span class="meta-item" style="width: 100%;"><i class="fas fa-laptop"></i> Online Session</span>
+                            <span class="meta-item"><i class="fas fa-laptop"></i> Online Session</span>
                         </div>
 
                         <div class="course-features">
@@ -204,7 +207,7 @@
                     <form id="contact-form" novalidate>
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" id="name" placeholder="John Doe">
+                            <input type="text" id="name" placeholder="Enter your Name">
                             <span class="error-msg" id="name-error">Name is required</span>
                         </div>
                         <div class="form-group">
@@ -224,7 +227,8 @@
                             <span class="error-msg" id="course-error">Please select a course</span>
                         </div>
 
-                        <button type="submit" class="btn-gold btn-small"><i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Send Message</button>
+                        <button type="submit" class="btn-gold btn-small"><i class="fab fa-whatsapp"
+                                style="margin-right: 8px;"></i> Send Message</button>
                     </form>
                 </div>
             </div>
@@ -269,6 +273,7 @@
         </div>
     </footer>
 
+    <div id="toast" class="toast">Message sent successfully!</div>
     <script src="script.js"></script>
 </body>
 

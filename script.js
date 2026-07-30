@@ -180,18 +180,27 @@ I have submitted an enquiry via your website form:
             const encodedMessage = encodeURIComponent(textMessage);
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
             
+            // Redirect to WhatsApp
             window.open(whatsappUrl, '_blank');
             
             const btn = contactForm.querySelector('button');
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Redirected to WhatsApp!';
-            btn.style.background = 'var(--whatsapp-color)';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting...';
+            btn.disabled = true;
             
             setTimeout(() => {
+                const toast = document.getElementById('toast');
+                if (toast) {
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 4000);
+                }
+                
                 contactForm.reset();
                 btn.innerHTML = originalHTML;
-                btn.style.background = '';
-            }, 3500);
+                btn.disabled = false;
+            }, 800);
         }
     });
 

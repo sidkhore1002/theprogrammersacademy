@@ -763,6 +763,7 @@ a {
 .contact-item i {
     width: 40px;
     height: 40px;
+    flex-shrink: 0;
     background: rgba(255,255,255,0.1);
     border-radius: 10px;
     display: flex;
@@ -781,6 +782,7 @@ a {
 .contact-item p {
     color: #a0aec0;
     font-size: 0.95rem;
+    word-break: break-word;
 }
 
 .social-links-contact {
@@ -1014,7 +1016,32 @@ a {
 .form-group.has-error input:focus,
 .form-group.has-error select:focus,
 .form-group.has-error textarea:focus {
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+/* Toast Notification */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    bottom: 30px;
+    font-size: 1.1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: translateX(-50%) translateY(20px);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
 /* Responsive */
@@ -1043,7 +1070,20 @@ a {
     .illustration-container {
         width: 350px;
         height: 350px;
+        margin: 0 auto;
     }
+    
+    .floating-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.6rem;
+    }
+    
+    .icon-1 { left: 5px; top: 15%; }
+    .icon-2 { right: 5px; }
+    .icon-5 { right: 5px; top: 15%; }
+    .icon-7 { left: 5px; }
+
     .benefits-container {
         flex-direction: column;
     }
@@ -1072,8 +1112,8 @@ a {
         height: calc(100vh - 75px);
         background: var(--bg-white);
         flex-direction: column;
-        align-items: center;
-        padding-top: 50px;
+        align-items: flex-start;
+        padding: 50px 40px 0;
         transition: 0.3s ease-in-out;
         box-shadow: 0 10px 15px rgba(0,0,0,0.1);
     }
@@ -1081,6 +1121,27 @@ a {
     .nav-links.active {
         left: 0;
     }
+    
+    .illustration-container {
+        width: 100%;
+        max-width: 320px;
+        height: 320px;
+        margin: 0 auto;
+    }
+    
+    .floating-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+        border-radius: 10px;
+    }
+    
+    .icon-1 { left: 10px; top: 15%; }
+    .icon-2 { right: 10px; }
+    .icon-3 { left: 25px; }
+    .icon-5 { right: 10px; top: 15%; }
+    .icon-6 { right: 25px; }
+    .icon-7 { left: 10px; }
     
     .nav-link {
         font-size: 1.2rem;
