@@ -884,7 +884,7 @@ a {
 .footer-logo-img {
     height: 100px;
     width: auto;
-    mix-blend-mode: multiply;
+    background: #ffffff;
     padding: 6px 14px;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
