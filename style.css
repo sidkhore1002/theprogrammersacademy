@@ -204,13 +204,13 @@ a {
 }
 
 .logo-img {
-    height: 75px;
+    height: 85px;
     width: auto;
     transition: var(--transition);
 }
 
 .navbar.scrolled .logo-img {
-    height: 60px;
+    height: 70px;
 }
 
 .nav-links {
@@ -881,7 +881,7 @@ a {
 }
 
 .footer-logo-img {
-    height: 85px;
+    height: 95px;
     width: auto;
     background: #ffffff;
     padding: 6px 14px;
@@ -1105,10 +1105,22 @@ a {
         font-size: 0.95rem;
         white-space: nowrap;
     }
+    
+    .course-meta {
+        flex-wrap: nowrap !important;
+        gap: 5px !important;
+        justify-content: space-between;
+    }
+    
+    .meta-item {
+        font-size: 0.75rem;
+        gap: 4px;
+        white-space: nowrap;
+    }
 
     .navbar { padding: 0 20px; height: 75px; }
-    .logo-img { height: 55px; }
-    .navbar.scrolled .logo-img { height: 50px; }
+    .logo-img { height: 65px; }
+    .navbar.scrolled .logo-img { height: 55px; }
     
     .nav-links {
         position: fixed;
