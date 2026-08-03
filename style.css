@@ -62,7 +62,7 @@ a {
 }
 
 /* Buttons */
-.btn-primary, .btn-secondary, .btn-gold {
+.btn-primary, .btn-secondary, .btn-gold, .btn-gold-reverse {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -94,6 +94,18 @@ a {
 }
 
 .btn-gold:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(243, 199, 47, 0.5);
+    color: #000000;
+}
+
+.btn-gold-reverse {
+    background: linear-gradient(135deg, #FFFFFF, #F3C72F);
+    color: #111827;
+    box-shadow: 0 4px 15px rgba(243, 199, 47, 0.3);
+}
+
+.btn-gold-reverse:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(243, 199, 47, 0.5);
     color: #000000;
